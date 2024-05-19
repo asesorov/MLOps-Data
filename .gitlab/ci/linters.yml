@@ -1,0 +1,13 @@
+stages:
+  - lint
+
+flake8_lint:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - pip install flake8
+  script:
+    - flake8 --config=.flake8
+  only:
+    changes:
+      - '**/*.py'
