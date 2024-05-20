@@ -11,3 +11,5 @@ flake8_lint:
   only:
     changes:
       - '**/*.py'
+  tags:
+    - light
