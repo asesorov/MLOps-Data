@@ -81,6 +81,7 @@ def main(input_filepath, output_filepath, augment_percent):
     augmentations = A.Compose([
         A.RandomBrightnessContrast(p=0.4),
         A.RandomGamma(p=0.4),
+        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], p=1.0),
         A.RandomShadow(p=0.3),
     ], bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
