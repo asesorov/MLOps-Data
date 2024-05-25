@@ -1,0 +1,56 @@
+schema: '2.0'
+stages:
+  augment_data:
+    cmd: python src/data/make_dataset.py data/raw/NightOwlsYolo data/processed/NightOwlsYolo
+      --augment_percent 20
+    deps:
+    - path: data/raw/NightOwlsYolo/data.yaml
+      hash: md5
+      md5: 0739266a265b1cb5da9aa376c6fe4296
+      size: 306
+    - path: src/data/make_dataset.py
+      hash: md5
+      md5: f8fcabcedea921a621f160b13d740954
+      size: 5004
+    outs:
+    - path: data/processed/NightOwlsYolo
+      hash: md5
+      md5: ce7c4c211f46c8f7ef1f04892e82abdc.dir
+      size: 118790649
+      nfiles: 3375
+  train_yolov8:
+    cmd: python src/models/train_model.py data/processed/NightOwlsYolo/data.yaml --model
+      yolov8 --name yolov8_training && cp runs/train/yolov8_training/weights/best.pt
+      models/yolov8.pt
+    deps:
+    - path: src/models/train_model.py
+      hash: md5
+      md5: ae10985bdb77ad1265568a1c834c15c7
+      size: 1828
+    outs:
+    - path: runs/train/yolov8_training/results.csv
+      hash: md5
+      md5: a4c765f7c3f24e698aaee21b8a6de518
+      size: 1344
+    - path: runs/train/yolov8_training/results.png
+      hash: md5
+      md5: d3ed51dc7945ad68cae4ff170753945b
+      size: 266958
+    - path: runs/train/yolov8_training/weights/best.pt
+      hash: md5
+      md5: 2ec61f8a658f85b8047ec4f91ace85d6
+      size: 6225689
+  performance:
+    cmd: python src/models/predict_model.py 
+      data/processed/NightOwlsYolo/test/images/58c580d2bc26013448bf10a1_png.rf.a989cf7a3e98528798a4a2037183361f.jpg
+      --model models/yolov8.pt
+    deps:
+    - path: 
+        data/processed/NightOwlsYolo/test/images/58c580d2bc26013448bf10a1_png.rf.a989cf7a3e98528798a4a2037183361f.jpg
+      hash: md5
+      md5: 71ec1c5eddcbc81af232a28b97dc204d
+      size: 97003
+    - path: src/models/predict_model.py
+      hash: md5
+      md5: 05810556cad98d809c289b8c49c99d55
+      size: 1040
