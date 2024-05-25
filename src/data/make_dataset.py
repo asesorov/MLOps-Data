@@ -81,6 +81,7 @@ def main(input_filepath, output_filepath, augment_percent):
     augmentations = A.Compose([
         A.RandomBrightnessContrast(p=0.4),
         A.RandomGamma(p=0.4),
+        A.RandomShadow(p=0.3),
     ], bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
     for subset in ['train', 'valid', 'test']:
