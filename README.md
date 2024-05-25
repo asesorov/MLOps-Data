@@ -1,4 +1,4 @@
-MLOps Project: Nigttime Pedestrian Detection on Mobile
+MLOps Project: Nigt-time Pedestrian Detection on Mobile
 ==============================
 
 MLOps Course Project
@@ -56,6 +56,11 @@ Project Organization
 
 Infrastructure
 ------------
+
+Agents:
+- Raspberry Pi 5 8GB (Gitlab runner, Portainer host, Minio host), Ubuntu Server 23.10
+- Raspberry Pi Zero 2W (Gitlab runner for lightweight jobs), Ubuntu Server 24.04
+
 Minio S3 as DVC storage
 ![Minio UI](/reports/samples/minio.png)
 

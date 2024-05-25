@@ -1,0 +1,23 @@
+stages:
+  augment_data:
+    cmd: python src/data/make_dataset.py data/raw/NightOwlsYolo data/processed/NightOwlsYolo --augment_percent 20
+    deps:
+      - data/raw/NightOwlsYolo/data.yaml
+      - src/data/make_dataset.py
+    outs:
+      - data/processed/NightOwlsYolo
+
+  train_yolov8:
+    cmd: python src/models/train_model.py data/processed/NightOwlsYolo/data.yaml --model yolov8 --name yolov8_training && cp runs/train/yolov8_training/weights/best.pt models/yolov8.pt
+    deps:
+      - src/models/train_model.py
+    outs:
+      - runs/train/yolov8_training/results.csv
+      - runs/train/yolov8_training/results.png
+      - runs/train/yolov8_training/weights/best.pt
+
+  performance:
+    cmd: python src/models/predict_model.py data/processed/NightOwlsYolo/test/images/58c580d2bc26013448bf10a1_png.rf.a989cf7a3e98528798a4a2037183361f.jpg --model models/yolov8.pt
+    deps:
+      - src/models/predict_model.py
+      - data/processed/NightOwlsYolo/test/images/58c580d2bc26013448bf10a1_png.rf.a989cf7a3e98528798a4a2037183361f.jpg

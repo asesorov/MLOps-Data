@@ -9,7 +9,7 @@ from dotenv import find_dotenv, load_dotenv
 @click.argument('data_yaml', type=click.Path(exists=True))
 @click.option('--model', type=click.Choice(['yolov8', 'yolov9']), default='yolov8', help='YOLO model version to use.')
 @click.option('--epochs', type=int, default=3, help='Number of epochs to train for.')
-@click.option('--batch-size', type=int, default=16, help='Batch size for training.')
+@click.option('--batch-size', type=int, default=4, help='Batch size for training.')
 @click.option('--img-size', type=int, default=640, help='Image size for training.')
 @click.option('--project', type=str, default='runs/train', help='Save directory for training results.')
 @click.option('--name', type=str, default='exp', help='Experiment name.')
