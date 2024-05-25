@@ -1,4 +1,4 @@
-MLOps Project
+MLOps Project: Nigttime Pedestrian Detection on Mobile
 ==============================
 
 MLOps Course Project
@@ -53,5 +53,13 @@ Project Organization
 
 
 --------
+
+Infrastructure
+------------
+Minio S3 as DVC storage
+![Minio UI](/reports/samples/minio.png)
+
+Portainer as Docker manager
+![Portainer UI](/reports/samples/portainer.png)
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
