@@ -1,8 +1,9 @@
 stages:
-  - lint
+  - codestyle
+  - security
 
 flake8_lint:
-  stage: lint
+  stage: codestyle
   image: python:3.11
   before_script:
     - pip install flake8
@@ -11,5 +12,11 @@ flake8_lint:
   only:
     changes:
       - '**/*.py'
-  tags:
-    - light
+
+bandit_lint:
+  stage: security
+  image: python:3.11
+  before_script:
+    - pip install bandit
+  script:
+    - bandit -r .
