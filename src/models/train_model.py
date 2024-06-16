@@ -1,8 +1,12 @@
+import os
 import click
 import logging
 import ultralytics
+import mlflow
+import mlflow.pyfunc
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
+from ultralytics import settings
 
 
 @click.command()
@@ -13,13 +17,21 @@ from dotenv import find_dotenv, load_dotenv
 @click.option('--img-size', type=int, default=640, help='Image size for training.')
 @click.option('--project', type=str, default='runs/train', help='Save directory for training results.')
 @click.option('--name', type=str, default='exp', help='Experiment name.')
-def main(data_yaml, model, epochs, batch_size, img_size, project, name):
+@click.option('--experiment-name', type=str, default='YOLO Training', help='MLflow experiment name.')
+@click.option('--run-name', type=str, default=None, help='MLflow run name.')
+def main(data_yaml, model, epochs, batch_size, img_size, project, name, experiment_name, run_name):
     """
-    Trains a YOLOv8 or YOLOv9 model.
+    Trains a YOLOv8 or YOLOv9 model and logs to MLflow.
     """
     logger = logging.getLogger(__name__)
     logger.info('Starting model training')
 
+    # Set up MLflow tracking server
+    os.environ["MLFLOW_EXPERIMENT_NAME"] = experiment_name
+    os.environ["MLFLOW_RUN"] = run_name
+    settings.update({"mlflow": True})
+
+    # Model selection
     if model == 'yolov8':
         model_type = ultralytics.YOLO('yolov8n.pt')
     elif model == 'yolov9':

@@ -8,7 +8,7 @@ stages:
       - data/processed/NightOwlsYolo
 
   train_yolov8:
-    cmd: python src/models/train_model.py data/processed/NightOwlsYolo/data.yaml --model yolov8 --name yolov8_training && cp runs/train/yolov8_training/weights/best.pt models/yolov8.pt
+    cmd: python src/models/train_model.py data/processed/NightOwlsYolo/data.yaml --model yolov8 --name yolov8_training --experiment-name yolov8_training --run-name dvc_test_2 && cp runs/train/yolov8_training/weights/best.pt models/yolov8.pt
     deps:
       - src/models/train_model.py
     outs:
