@@ -20,13 +20,13 @@ stages:
       nfiles: 3375
   train_yolov8:
     cmd: python src/models/train_model.py data/processed/NightOwlsYolo/data.yaml --model
-      yolov8 --name yolov8_training && cp runs/train/yolov8_training/weights/best.pt
-      models/yolov8.pt
+      yolov8 --name yolov8_training --experiment-name yolov8_training --run-name dvc_test_2
+      && cp runs/train/yolov8_training/weights/best.pt models/yolov8.pt
     deps:
     - path: src/models/train_model.py
       hash: md5
-      md5: ae10985bdb77ad1265568a1c834c15c7
-      size: 1828
+      md5: 2ad6291d916d4500276d714db11f3b18
+      size: 2327
     outs:
     - path: runs/train/yolov8_training/results.csv
       hash: md5
@@ -38,7 +38,7 @@ stages:
       size: 266958
     - path: runs/train/yolov8_training/weights/best.pt
       hash: md5
-      md5: 2ec61f8a658f85b8047ec4f91ace85d6
+      md5: 025ecbfd1e4df478bd2269ac66ca05cd
       size: 6225689
   performance:
     cmd: python src/models/predict_model.py 
