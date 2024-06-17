@@ -1,4 +1,5 @@
 import os
+import onnx
 import click
 import logging
 import ultralytics
@@ -47,6 +48,11 @@ def main(data_yaml, model, epochs, batch_size, img_size, project, name, experime
         project=project,
         name=name,
     )
+
+    current_experiment = dict(mlflow.get_experiment_by_name(experiment_name))
+    experiment_id = current_experiment['experiment_id']
+    run_id = mlflow.search_runs([experiment_id], filter_string=f"run_name='{run_name}'")['run_id'].loc[0]
+    mlflow.register_model(f"runs:/{run_id}/weights/best.pt", f'{model}_{experiment_name}_{run_name}_{img_size}.pt')
 
 
 if __name__ == '__main__':
